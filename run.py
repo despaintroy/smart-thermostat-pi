@@ -1,14 +1,25 @@
 #Libraries
-import Adafruit_DHT as dht
-from time import sleep
-#Set DATA pin
-DHT = 4
+import adafruit_dht
+from board import D4
+from time import sleep, time
+
+dht_device = adafruit_dht.DHT22(D4)
+
 while True:
-    #Read Temp and Hum from DHT22
-    h,t = dht.read_retry(dht.DHT22, DHT)
-    #Print Temperature and Humidity on Shell window
-    print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(t,h))
-    sleep(5) #Wait 5 seconds and read again
+    try:
+        temperature = dht_device.temperature
+        humidity = dht_device.humidity
+
+        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature,humidity))
+    except RuntimeError as error:
+        print(error.args[0])
+        sleep(2.0)
+        continue
+    except Exception as error:
+        dht_device.exit()
+        raise error
+
+    sleep(5)
 
 
 # import firebase_admin
