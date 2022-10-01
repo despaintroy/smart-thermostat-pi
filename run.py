@@ -1,4 +1,3 @@
-#Libraries
 import adafruit_dht
 from board import D4
 from time import sleep, time
@@ -10,11 +9,14 @@ while True:
         temperature = dht_device.temperature
         humidity = dht_device.humidity
 
-        print('Temp={0:0.1f}*C  Humidity={1:0.1f}%'.format(temperature,humidity))
+        print('Temp={0:0.1f}ºC  Humidity={1:0.1f}%'.format(
+            temperature, humidity))
+
     except RuntimeError as error:
         print(error.args[0])
         sleep(2.0)
         continue
+
     except Exception as error:
         dht_device.exit()
         raise error
@@ -35,7 +37,7 @@ while True:
 # 	"storageBucket": "smart-thermostat-92710.appspot.com",
 # 	"messagingSenderId": "31001839536",
 # 	"appId": "31001839536:web:a4c255c21db37087f37875",
-# 	"client_email": "despaintroy@gmail.com", 
+# 	"client_email": "despaintroy@gmail.com",
 # 	"token_uri": ""
 # })
 
