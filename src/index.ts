@@ -9,9 +9,9 @@ setInterval(() => {
 		.then(({ temperature, humidity }) => {
 			setFurnace(humidity > 50.0)
 			console.log(
-				`Temperature: ${celsiusToFahrenheit(
-					temperature
-				)}°F, Humidity: ${humidity}%`
+				`Temperature: ${Math.round(
+					celsiusToFahrenheit(temperature)
+				)}°F, Humidity: ${Math.round(humidity)}%`
 			)
 		})
 		.catch(err => console.error('Error', err))
