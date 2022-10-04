@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@types/node": "^16.11.63",
+		"dotenv": "^16.0.3",
 		"node-dht-sensor": "^0.4.3"
 	}
 }
