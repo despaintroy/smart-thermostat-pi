@@ -5,6 +5,7 @@ dotenv.config()
 
 export const SENSOR_TYPE = Number(process.env.SENSOR_TYPE) as SensorType
 export const SENSOR_PIN = Number(process.env.SENSOR_PIN)
+export const FURNACE_PIN = Number(process.env.FURNACE_PIN)
 export const MOCK_ENVIRONMENT =
 	process.env.MOCK_ENVIRONMENT?.toLowerCase() === 'true'
 

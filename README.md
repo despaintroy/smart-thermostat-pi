@@ -1,5 +1,7 @@
 # Thermostat README
 
+Use with Node version 16
+
 ## Firebase Admin Secret
 
 Create a file named `key.json`, with contents downloaded from Firebase Project Settings > Service Accounts > "Generate New Private Key"
