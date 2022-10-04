@@ -5,7 +5,7 @@ dotenv.config()
 const { read, initialize, setMaxRetries } = promises
 
 const SENSOR_TYPE = Number(process.env.SENSOR_TYPE) as SensorType
-const SENSOR_PIN = Number(process.env.MOCK_ENVIRONMENT)
+const SENSOR_PIN = Number(process.env.SENSOR_PIN)
 const MOCK_ENVIRONMENT = process.env.MOCK_ENVIRONMENT?.toLowerCase() === 'true'
 
 if (SENSOR_TYPE !== 11 && SENSOR_TYPE !== 22) {
@@ -19,16 +19,18 @@ if (isNaN(SENSOR_PIN)) {
 }
 
 setMaxRetries(10)
-// initialize(SENSOR_TYPE, SENSOR_PIN)
-
-initialize({
-	test: {
-		fake: {
-			temperature: 21,
-			humidity: 60,
+if (MOCK_ENVIRONMENT) {
+	initialize({
+		test: {
+			fake: {
+				temperature: 21,
+				humidity: 60,
+			},
 		},
-	},
-})
+	})
+} else {
+	initialize(SENSOR_TYPE, SENSOR_PIN)
+}
 
 read(SENSOR_TYPE, SENSOR_PIN)
 	.then(({ temperature, humidity }) => {
