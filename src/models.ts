@@ -1,4 +1,9 @@
 export interface CurrentTarget {
 	targetTemp: number
-	forceOn: boolean
+}
+
+export interface IndoorMeasurement {
+	timeStamp: number
+	temperature: number
+	humidity: number
 }
