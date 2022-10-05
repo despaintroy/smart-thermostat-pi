@@ -1,18 +1,27 @@
+import { watchTargetState } from './firebase'
 import { measureTempHumid, setFurnace } from './hardware'
 import { celsiusToFahrenheit } from './helpers'
-import setup from './setup'
 
-setup()
+let targetTemp: number | null = null
 
-setInterval(() => {
-	measureTempHumid()
-		.then(({ temperature, humidity }) => {
-			setFurnace(humidity > 50.0)
-			console.log(
-				`Temperature: ${Math.round(
-					celsiusToFahrenheit(temperature)
-				)}°F, Humidity: ${Math.round(humidity)}%`
-			)
-		})
-		.catch(err => console.error('Error', err))
-}, 3000)
+watchTargetState(targetState => {
+	console.log('Target state changed', targetState.targetTemp)
+	targetTemp = targetState.targetTemp
+})
+
+async function verifyTemp() {
+	try {
+		const { temperature, humidity } = await measureTempHumid()
+		const fahrenheit = celsiusToFahrenheit(temperature)
+
+		console.log({ targetTemp, fahrenheit })
+
+		if (targetTemp) {
+			setFurnace(fahrenheit < targetTemp)
+		}
+	} catch (_error) {
+		console.error('Error measuring temperature')
+	}
+}
+
+setInterval(verifyTemp, 3000)
